@@ -16,6 +16,7 @@ class EideticDB extends Dexie {
 
   constructor() {
     super("eidetic");
+
     this.version(1).stores({
       memories: "id, category, key, priority, source, updated_at",
       conflicts: "id, memory_id, resolution, created_at",
@@ -23,6 +24,24 @@ class EideticDB extends Dexie {
       platform_configs: "id, platform, role",
       version_history: "id, memory_id, changed_at",
     });
+
+    this.version(2)
+      .stores({
+        platform_configs: "id, platform, role, integration_mode",
+      })
+      .upgrade((tx) => {
+        return tx
+          .table("platform_configs")
+          .toCollection()
+          .modify((config) => {
+            // Migrate existing records: infer mode from platform ID
+            if (!config.integration_mode) {
+              config.integration_mode = config.platform.endsWith("_api")
+                ? "api_sync"
+                : "web_tracking";
+            }
+          });
+      });
   }
 }
 

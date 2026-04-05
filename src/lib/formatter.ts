@@ -40,7 +40,7 @@ function filterForPlatform(memories: Memory[], platform: PlatformId): Memory[] {
 
 /** Claude adapter — markdown for API Memory Tool */
 export function formatForClaude(memories: Memory[]): string {
-  const filtered = filterForPlatform(memories, "claude_api");
+  const filtered = filterForPlatform(memories, "claude_web");
   const groups = groupByCategory(filtered);
   const now = new Date().toISOString();
 
@@ -64,7 +64,7 @@ export function formatForClaude(memories: Memory[]): string {
 
 /** Gemini adapter — system instruction text for Gem */
 export function formatForGemini(memories: Memory[]): string {
-  const filtered = filterForPlatform(memories, "gemini_gem");
+  const filtered = filterForPlatform(memories, "gemini_web");
   const groups = groupByCategory(filtered);
 
   let out =
@@ -95,7 +95,7 @@ export function formatForGemini(memories: Memory[]): string {
 
 /** ChatGPT adapter — Custom Instructions format */
 export function formatForChatGPT(memories: Memory[]): string {
-  const filtered = filterForPlatform(memories, "chatgpt_custom");
+  const filtered = filterForPlatform(memories, "chatgpt_web");
   const groups = groupByCategory(filtered);
 
   let aboutMe = "ABOUT ME:\n";
@@ -151,14 +151,18 @@ export function formatForPlatform(
   platform: PlatformId
 ): string {
   switch (platform) {
-    case "claude_api":
     case "claude_web":
+    case "claude_api":
       return formatForClaude(memories);
-    case "gemini_gem":
+    case "gemini_web":
     case "gemini_api":
       return formatForGemini(memories);
-    case "chatgpt_custom":
+    case "chatgpt_web":
+    case "chatgpt_api":
       return formatForChatGPT(memories);
+    case "perplexity_web":
+    case "grok_web":
+      return formatForClipboard(memories);
     default:
       return formatForClipboard(memories);
   }

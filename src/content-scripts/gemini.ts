@@ -1,4 +1,4 @@
-import { observeMessages } from "./shared";
+import { observeMessages, injectTrackingIndicator } from "./shared";
 
 observeMessages(
   "[class*='chat-container'], main",
@@ -10,4 +10,5 @@ observeMessages(
   }
 );
 
+injectTrackingIndicator("Gemini");
 console.log("[Eidetic] Gemini content script loaded");

@@ -1,21 +1,23 @@
 import { db } from "./db";
 import type { PlatformConfig } from "./types";
 
-/** Seed default platform configs on first run. Uses deterministic IDs to prevent duplicates. */
+/** Seed default web-tracking platform configs on first run. */
 export async function seedDefaults() {
   const defaults: PlatformConfig[] = [
     {
-      id: "platform-claude-api",
-      platform: "claude_api",
+      id: "platform-claude-web",
+      platform: "claude_web",
+      integration_mode: "web_tracking",
       role: "primary",
       enabled: true,
-      config: { auto_extract: true, auto_push: true },
+      config: { auto_extract: true, auto_push: false },
       last_sync_at: null,
       last_sync_status: null,
     },
     {
-      id: "platform-gemini-gem",
-      platform: "gemini_gem",
+      id: "platform-gemini-web",
+      platform: "gemini_web",
+      integration_mode: "web_tracking",
       role: "secondary",
       enabled: true,
       config: { auto_extract: true, auto_push: false },
@@ -23,22 +25,51 @@ export async function seedDefaults() {
       last_sync_status: null,
     },
     {
-      id: "platform-chatgpt-custom",
-      platform: "chatgpt_custom",
+      id: "platform-chatgpt-web",
+      platform: "chatgpt_web",
+      integration_mode: "web_tracking",
       role: "secondary",
-      enabled: false,
-      config: { auto_extract: false, auto_push: false },
+      enabled: true,
+      config: { auto_extract: true, auto_push: false },
+      last_sync_at: null,
+      last_sync_status: null,
+    },
+    {
+      id: "platform-perplexity-web",
+      platform: "perplexity_web",
+      integration_mode: "web_tracking",
+      role: "secondary",
+      enabled: true,
+      config: { auto_extract: true, auto_push: false },
+      last_sync_at: null,
+      last_sync_status: null,
+    },
+    {
+      id: "platform-grok-web",
+      platform: "grok_web",
+      integration_mode: "web_tracking",
+      role: "secondary",
+      enabled: true,
+      config: { auto_extract: true, auto_push: false },
       last_sync_at: null,
       last_sync_status: null,
     },
   ];
 
-  // Clear stale data and re-seed with deterministic IDs
-  const existing = await db.platform_configs.count();
-  if (existing > defaults.length) {
-    await db.platform_configs.clear();
+  // Migrate: remove legacy platform configs from v0.1.0
+  const legacyIds = [
+    "platform-claude-api",
+    "platform-gemini-gem",
+    "platform-chatgpt-custom",
+  ];
+  for (const id of legacyIds) {
+    const exists = await db.platform_configs.get(id);
+    if (exists) {
+      await db.platform_configs.delete(id);
+    }
   }
 
+  // Seed new defaults if missing
   for (const d of defaults) {
     const exists = await db.platform_configs.get(d.id);
     if (!exists) {

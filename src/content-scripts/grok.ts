@@ -1,4 +1,4 @@
-import { observeMessages } from "./shared";
+import { observeMessages, injectTrackingIndicator } from "./shared";
 
 observeMessages(
   "[class*='conversation'], main",
@@ -10,4 +10,5 @@ observeMessages(
   }
 );
 
+injectTrackingIndicator("Grok");
 console.log("[Eidetic] Grok content script loaded");

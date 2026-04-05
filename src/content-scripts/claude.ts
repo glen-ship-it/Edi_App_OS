@@ -1,4 +1,4 @@
-import { observeMessages } from "./shared";
+import { observeMessages, injectTrackingIndicator } from "./shared";
 
 observeMessages(
   "[class*='conversation']",
@@ -14,4 +14,5 @@ observeMessages(
   }
 );
 
+injectTrackingIndicator("Claude");
 console.log("[Eidetic] Claude content script loaded");

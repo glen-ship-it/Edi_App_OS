@@ -4,6 +4,40 @@
  * extracts user text, and sends to service worker for fact extraction.
  */
 
+/** Inject a small gold tracking indicator dot on tracked pages */
+export function injectTrackingIndicator(platformName: string) {
+  if (document.getElementById("eidetic-tracking-dot")) return;
+
+  const dot = document.createElement("div");
+  dot.id = "eidetic-tracking-dot";
+  dot.title = `Eidetic tracking active \u2014 ${platformName}`;
+  dot.style.cssText = [
+    "position: fixed",
+    "bottom: 12px",
+    "right: 12px",
+    "width: 10px",
+    "height: 10px",
+    "border-radius: 50%",
+    "background: #b5935a",
+    "box-shadow: 0 0 6px rgba(181, 147, 90, 0.5)",
+    "z-index: 2147483647",
+    "pointer-events: none",
+    "opacity: 0.8",
+    "transition: opacity 0.3s",
+  ].join("; ");
+
+  function append() {
+    if (document.body) {
+      document.body.appendChild(dot);
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.appendChild(dot);
+      });
+    }
+  }
+  append();
+}
+
 export function sendToBackground(text: string, platform: string) {
   try {
     chrome.runtime.sendMessage(

@@ -1,4 +1,4 @@
-import { observeMessages } from "./shared";
+import { observeMessages, injectTrackingIndicator } from "./shared";
 
 observeMessages(
   "[class*='thread'], main",
@@ -10,4 +10,5 @@ observeMessages(
   }
 );
 
+injectTrackingIndicator("Perplexity");
 console.log("[Eidetic] Perplexity content script loaded");

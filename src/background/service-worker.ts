@@ -1,5 +1,6 @@
 import { extractFacts } from "@/lib/extractor";
 import { db } from "@/lib/db";
+import { WEB_PLATFORM_MAP } from "@/lib/types";
 import type { Memory, Conflict } from "@/lib/types";
 
 // Listen for messages from content scripts
@@ -26,8 +27,9 @@ async function handleNewUserMessage(text: string, platform: string) {
 
   // Determine if this platform is primary or secondary
   const platformConfigs = await db.platform_configs.toArray();
+  const webPlatformId = WEB_PLATFORM_MAP[platform];
   const matchingConfig = platformConfigs.find((pc) =>
-    pc.platform.startsWith(platform) && pc.enabled
+    pc.platform === webPlatformId && pc.enabled
   );
   if (!matchingConfig) return;
 

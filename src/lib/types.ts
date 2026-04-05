@@ -21,11 +21,16 @@ export type MemorySource =
   | "imported";
 
 export type PlatformId =
-  | "claude_api"
   | "claude_web"
-  | "gemini_gem"
+  | "claude_api"
+  | "gemini_web"
   | "gemini_api"
-  | "chatgpt_custom";
+  | "chatgpt_web"
+  | "chatgpt_api"
+  | "perplexity_web"
+  | "grok_web";
+
+export type IntegrationMode = "web_tracking" | "api_sync";
 
 export type PlatformRole = "primary" | "secondary";
 
@@ -80,6 +85,7 @@ export interface SyncLog {
 export interface PlatformConfig {
   id: string;
   platform: PlatformId;
+  integration_mode: IntegrationMode;
   role: PlatformRole;
   enabled: boolean;
   config: {
@@ -113,9 +119,21 @@ export const CATEGORY_LABELS: Record<MemoryCategory, string> = {
 };
 
 export const PLATFORM_LABELS: Record<PlatformId, string> = {
+  claude_web: "Claude",
   claude_api: "Claude (API)",
-  claude_web: "Claude (Web)",
-  gemini_gem: "Gemini (Gem)",
+  gemini_web: "Gemini",
   gemini_api: "Gemini (API)",
-  chatgpt_custom: "ChatGPT",
+  chatgpt_web: "ChatGPT",
+  chatgpt_api: "ChatGPT (API)",
+  perplexity_web: "Perplexity",
+  grok_web: "Grok",
+};
+
+/** Map content script platform names to their web PlatformId */
+export const WEB_PLATFORM_MAP: Record<string, PlatformId> = {
+  claude: "claude_web",
+  gemini: "gemini_web",
+  chatgpt: "chatgpt_web",
+  perplexity: "perplexity_web",
+  grok: "grok_web",
 };
