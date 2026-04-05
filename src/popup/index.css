@@ -10,10 +10,8 @@
   }
 
   html, body, #root {
-    width: 100%;
-    max-width: 400px;
-    height: 100vh;
-    max-height: 600px;
+    width: 400px;
+    height: 600px;
     overflow: hidden;
     background-color: #060606;
     color: #efefef;

@@ -3,8 +3,19 @@ import { db } from "@/lib/db";
 import { WEB_PLATFORM_MAP } from "@/lib/types";
 import type { Memory, Conflict } from "@/lib/types";
 
-// Listen for messages from content scripts
+// Handle port connections — wakes the service worker when popup opens (MV3 requirement)
+chrome.runtime.onConnect.addListener((_port) => {
+  // Accept connection; service worker is now awake
+});
+
+// Listen for messages from content scripts and popup
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  // PING: lets the popup wake the service worker before any real message
+  if (message.type === "PING") {
+    sendResponse({ ok: true });
+    return true;
+  }
+
   if (message.type === "EXTRACT_FACTS") {
     const facts = extractFacts(message.text);
     sendResponse({ facts });
@@ -25,7 +36,6 @@ async function handleNewUserMessage(text: string, platform: string) {
   const facts = extractFacts(text);
   if (facts.length === 0) return;
 
-  // Determine if this platform is primary or secondary
   const platformConfigs = await db.platform_configs.toArray();
   const webPlatformId = WEB_PLATFORM_MAP[platform];
   const matchingConfig = platformConfigs.find((pc) =>
@@ -36,7 +46,6 @@ async function handleNewUserMessage(text: string, platform: string) {
   const isPrimary = matchingConfig.role === "primary";
 
   for (const fact of facts) {
-    // Check if a memory with this key+category already exists
     const existing = await db.memories
       .where("category")
       .equals(fact.category)
@@ -44,10 +53,9 @@ async function handleNewUserMessage(text: string, platform: string) {
       .first();
 
     if (existing) {
-      if (existing.value === fact.value) continue; // No change
+      if (existing.value === fact.value) continue;
 
       if (isPrimary) {
-        // Primary agent: auto-update vault
         await db.version_history.add({
           id: crypto.randomUUID(),
           memory_id: existing.id,
@@ -63,7 +71,6 @@ async function handleNewUserMessage(text: string, platform: string) {
           source: `extracted_${platform}` as Memory["source"],
         });
       } else {
-        // Secondary agent: queue as conflict
         await db.conflicts.add({
           id: crypto.randomUUID(),
           memory_id: existing.id,
@@ -78,7 +85,6 @@ async function handleNewUserMessage(text: string, platform: string) {
       }
     } else {
       if (isPrimary) {
-        // Primary agent: auto-add to vault
         await db.memories.add({
           id: crypto.randomUUID(),
           category: fact.category,
@@ -93,7 +99,6 @@ async function handleNewUserMessage(text: string, platform: string) {
           version: 1,
         });
       } else {
-        // Secondary agent with new fact: queue as conflict for review
         await db.conflicts.add({
           id: crypto.randomUUID(),
           memory_id: null,
@@ -109,12 +114,8 @@ async function handleNewUserMessage(text: string, platform: string) {
     }
   }
 
-  // Notify popup to reload if it's open
-  try {
-    chrome.runtime.sendMessage({ type: "VAULT_UPDATED" });
-  } catch {
-    // Popup not open — that's fine
-  }
+  // Notify popup to reload if open — .catch() handles promise rejection when popup is closed
+  chrome.runtime.sendMessage({ type: "VAULT_UPDATED" }).catch(() => {});
 }
 
 // Extension install handler

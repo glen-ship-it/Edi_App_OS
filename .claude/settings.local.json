@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)",
+      "Bash(pkill -f \"vite\")",
+      "mcp__Claude_Preview__preview_start",
+      "WebFetch(domain:www.ironclados.com)",
+      "Bash(find src:*)",
+      "Bash(grep -o \"b5935a\\\\|7c8aff\\\\|124.*138.*255\\\\|181.*147.*90\" /c/Users/Glen/Edi_App_OS/dist/assets/index*.css)",
+      "Bash(pkill -f vite)",
+      "Bash(find . -name \"*.tsx\" -exec sed -i -e 's/\\\\btext-accent\\\\b/text-[#b5935a]/g' -e 's/\\\\bbg-accent\\\\b/bg-[#b5935a]/g' -e 's/\\\\btext-accent-bright\\\\b/text-[#d4b277]/g' -e 's/\\\\bbg-accent-bright\\\\b/bg-[#d4b277]/g' -e 's/\\\\btext-base\\\\b/text-[#060606]/g' -e 's/\\\\bbg-base\\\\b/bg-[#060606]/g' -e 's/\\\\bbg-surface\\\\b/bg-[#161616]/g' -e 's/\\\\bbg-elevated\\\\b/bg-[#1e1e1e]/g' -e 's/\\\\btext-muted\\\\b/text-[#8a8a8a]/g' -e 's/\\\\bbg-muted\\\\b/bg-[#8a8a8a]/g' -e 's/\\\\btext-subtle\\\\b/text-[#ababab]/g' -e 's/\\\\btext-text-bright\\\\b/text-[#ffffff]/g' -e 's/\\\\btext-text\\\\b/text-[#efefef]/g' -e 's/\\\\btext-warning\\\\b/text-[#d4a94e]/g' -e 's/\\\\bbg-warning\\\\b/bg-[#d4a94e]/g' -e 's/\\\\btext-success\\\\b/text-[#5a9e6f]/g' -e 's/\\\\bbg-success\\\\b/bg-[#5a9e6f]/g' -e 's/\\\\btext-danger\\\\b/text-[#c45454]/g' -e 's/\\\\bbg-danger\\\\b/bg-[#c45454]/g' {} +)",
+      "Bash(find . -name \"*.tsx\" -exec sed -i -e 's/\\\\bhover:text-accent-bright\\\\b/hover:text-[#d4b277]/g' -e 's/\\\\bhover:bg-accent-bright\\\\b/hover:bg-[#d4b277]/g' -e 's/\\\\bhover:text-[#ababab]\\\\b/hover:text-[#ababab]/g' -e 's/\\\\bhover:text-[#efefef]\\\\b/hover:text-[#efefef]/g' -e 's/\\\\bhover:text-[#c45454]\\\\b/hover:text-[#c45454]/g' -e 's/\\\\bhover:bg-[#1e1e1e]\\\\b/hover:bg-[#1e1e1e]/g' -e 's/\\\\bhover:border-warning\\\\/50\\\\b/hover:border-[#d4a94e80]/g' {} +)",
+      "Bash(find /c/Users/Glen/Edi_App_OS/src/popup/components -name \"*.tsx\" -exec sed -i -e 's/hover:text-accent-bright/hover:text-[#d4b277]/g' -e 's/hover:bg-accent-bright/hover:bg-[#d4b277]/g' -e 's/hover:text-danger/hover:text-[#c45454]/g' -e 's/hover:text-subtle/hover:text-[#ababab]/g' -e 's/hover:text-text/hover:text-[#efefef]/g' {} +)",
+      "Bash(find /c/Users/Glen/Edi_App_OS/src/popup/components -name \"*.tsx\" -exec sed -i -e 's/text-\\\\[#b5935a\\\\]\\\\/20/text-[#b5935a33]/g' -e 's/text-\\\\[#b5935a\\\\]\\\\/30/text-[#b5935a4d]/g' -e 's/text-\\\\[#b5935a\\\\]\\\\/50/text-[#b5935a80]/g' -e 's/text-\\\\[#b5935a\\\\]\\\\/60/text-[#b5935a99]/g' {} +)",
+      "Bash(python -c \":*)",
+      "Bash(git config:*)",
+      "Bash(gh repo:*)",
+      "Bash(where gh:*)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "mcp__mcp-registry__suggest_connectors",
+      "Bash(where gh.exe)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" --version)",
+      "Bash(\"/c/Program Files \\(x86\\)/GitHub CLI/gh.exe\" --version)",
+      "Bash(cmd //c \"gh --version\")",
+      "Bash(cmd //c \"gh auth status\")",
+      "Bash(export PATH=\"$PATH:/c/Program Files/GitHub CLI\")",
+      "Bash(gh auth:*)"
+    ]
+  }
+}

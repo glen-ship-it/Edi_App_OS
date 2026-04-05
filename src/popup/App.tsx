@@ -34,6 +34,10 @@ export default function App() {
     }
 
     try {
+      // Ping the service worker to wake it (MV3 workers sleep after 30s inactivity)
+      chrome.runtime.sendMessage({ type: "PING" }).catch(() => {
+        // Worker was sleeping — ping itself woke it, ignore the rejection
+      });
       chrome.runtime.onMessage.addListener(handleMessage);
       return () => chrome.runtime.onMessage.removeListener(handleMessage);
     } catch {
