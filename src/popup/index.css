@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    max-height: 600px;
+    overflow: hidden;
+    background-color: #060606;
+    color: #efefef;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 0 auto;
+  }
+
+  /* IroncladOS diamond trellis pattern */
+  body {
+    background-image:
+      linear-gradient(45deg, rgba(181, 147, 90, 0.04) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(181, 147, 90, 0.04) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(181, 147, 90, 0.04) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(181, 147, 90, 0.04) 75%);
+    background-size: 24px 24px;
+    background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(181, 147, 90, 0.2);
+  }
+
+  /* Select dropdown styling */
+  select option {
+    background: #161616;
+    color: #efefef;
+  }
+}
+
+@layer components {
+  .pill {
+    @apply px-3 py-1 text-xs font-medium transition-colors cursor-pointer tracking-wide uppercase;
+  }
+  .pill-active {
+    background-color: #b5935a;
+    color: #060606;
+  }
+  .pill-inactive {
+    background-color: #161616;
+    color: #8a8a8a;
+    border: 1px solid rgba(181, 147, 90, 0.1);
+  }
+  .pill-inactive:hover {
+    color: #ababab;
+  }
+  .card {
+    background-color: #161616;
+    padding: 0.75rem;
+    border: 1px solid rgba(181, 147, 90, 0.1);
+  }
+  .card:hover {
+    border-color: rgba(181, 147, 90, 0.3);
+  }
+  .btn-primary {
+    background-color: #b5935a;
+    color: #060606;
+    font-weight: 500;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    transition: background-color 0.15s;
+  }
+  .btn-primary:hover {
+    background-color: #d4b277;
+  }
+  .btn-ghost {
+    color: #b5935a;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    border: 1px solid rgba(181, 147, 90, 0.4);
+    transition: background-color 0.15s;
+  }
+  .btn-ghost:hover {
+    background: rgba(181, 147, 90, 0.1);
+  }
+  .btn-danger {
+    @apply font-medium px-4 py-2 transition-colors text-sm uppercase;
+    letter-spacing: 1.4px;
+    background: rgba(196, 84, 84, 0.15);
+    color: #c45454;
+    border: 1px solid rgba(196, 84, 84, 0.3);
+  }
+  .btn-danger:hover {
+    background: rgba(196, 84, 84, 0.25);
+  }
+  .input {
+    background-color: #161616;
+    font-size: 0.875rem;
+    color: #efefef;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid rgba(181, 147, 90, 0.15);
+    outline: none;
+  }
+  .input::placeholder {
+    color: #8a8a8a;
+  }
+  .input:focus {
+    border-color: rgba(181, 147, 90, 0.5);
+  }
+  .status-dot {
+    @apply w-2 h-2 inline-block;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .divider {
+    border-top: 1px solid rgba(181, 147, 90, 0.1);
+  }
+}
